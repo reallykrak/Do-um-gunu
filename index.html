@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doğum Günün Kutlu Olsun Fatih!</title>
+    
+    <!-- Tailwind CSS'i yüklüyoruz -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts'tan "Inter" ve "Pacifico" (el yazısı) fontunu yüklüyoruz -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        /* Tailwind'e özel fontlarımızı ekleyelim */
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- Pasta ve Mum için Özel CSS Kodları --- */
+
+        .cake-container {
+            position: relative;
+            width: 200px;
+            height: 120px;
+            margin-top: 60px; /* Mum için yer aç */
+            margin-bottom: 30px;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 100px;
+            background: #d2691e; /* çikolata */
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-bottom: 5px solid #8B4513; /* Koyu kahve taban */
+        }
+
+        .icing {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: #f8f8f8; /* beyaz krema */
+            border-radius: 50% / 20px; /* Damla efekti */
+            border: 2px solid #eee;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 90px; /* Pastanın üstünde */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 55px;
+            background: linear-gradient(to right, #4facfe, #00f2fe); /* Mavi-beyaz mum */
+            border: 2px solid #fff;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .wick {
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 8px;
+            background: #333;
+        }
+
+        .flame {
+            position: absolute;
+            top: -26px; /* Fitilin üstünde */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 22px;
+            background: #ffc800; /* Alev sarısı */
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 12px #ffc800, 0 0 20px #ffc800, 0 0 5px #f00;
+            animation: flicker 1s infinite alternate;
+            transition: all 0.3s ease-out;
+            opacity: 1;
+            /* Tıklamayı kolaylaştırmak için daha geniş bir alan */
+            pointer-events: none; 
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 12px #ffc800, 0 0 20px #ffc800, 0 0 5px #f00;
+            }
+            50% {
+                transform: translateX(-48%) scale(1.1);
+                box-shadow: 0 0 14px #ffc800, 0 0 26px #ffc800, 0 0 7px #f00;
+            }
+            100% {
+                transform: translateX(-50%) scale(0.95);
+                box-shadow: 0 0 10px #ffc800, 0 0 18px #ffc800, 0 0 5px #f00;
+            }
+        }
+
+        /* Mum üflendiğindeki durum */
+        .flame.out {
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px) scale(0);
+        }
+
+        .smoke {
+            position: absolute;
+            top: -26px;
+            left: 50%;
+            width: 10px;
+            height: 12px;
+            background: #777;
+            border-radius: 50%;
+            opacity: 0;
+            transform: translateX(-50%);
+            transition: all 0.8s ease-out;
+            z-index: 5;
+        }
+
+        /* Alev söndüğünde dumanın çıkması */
+        .flame.out + .smoke {
+            opacity: 0.6;
+            transform: translateX(-50%) translateY(-25px) scale(1.8);
+        }
+
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 min-h-screen flex flex-col items-center justify-center p-4 text-white text-center overflow-hidden font-inter">
+
+    <!-- Ana Başlık -->
+    <h1 class="text-4xl md:text-6xl font-extrabold text-yellow-300 drop-shadow-lg mb-6 animate-pulse font-pacifico">
+        Doğum günün kutlu olsun Fatihim
+    </h1>
+
+    <!-- Yönlendirme Metni -->
+    <p id="info-text" class="text-xl text-gray-200 mb-8 transition-opacity duration-500">
+        Mumu üflemek için tıkla!
+    </p>
+
+    <!-- Pasta ve Mum Alanı -->
+    <div class="cake-container">
+        <div class="cake">
+            <div class="icing"></div>
+        </div>
+        <!-- Tıklanabilir Mum -->
+        <div id="candle" class="candle" title="Mumu üfle!">
+            <div class="wick"></div>
+            <div id="flame" class="flame"></div>
+            <div id="smoke" class="smoke"></div> <!-- Duman efekti -->
+        </div>
+    </div>
+
+    <!-- İmza -->
+    <p class="text-2xl font-medium text-gray-300 italic mt-12 font-pacifico">
+        Fatihime özel ~ Kayra
+    </p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const candle = document.getElementById('candle');
+            const flame = document.getElementById('flame');
+            const infoText = document.getElementById('info-text');
+            let isBlownOut = false;
+
+            if (candle && flame && infoText) {
+                candle.addEventListener('click', () => {
+                    // Sadece bir kez üflenebilsin
+                    if (!isBlownOut) {
+                        isBlownOut = true;
+                        flame.classList.add('out');
+                        infoText.style.opacity = '0'; // "Mumu üfle" yazısını gizle
+                        
+                        // Söndükten sonra "İyi ki doğdun!" diyelim
+                        setTimeout(() => {
+                            infoText.textContent = "İyi ki doğdun! 🎉";
+                            infoText.style.opacity = '1';
+                        }, 800); // Duman efektinden sonra
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+  </html>
