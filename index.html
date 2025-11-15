@@ -70,6 +70,25 @@
             }
         }
         
+        /* YENİ EKLENEN SPRINKLES (Pasta Süsü) STİLİ */
+        .sprinkles {
+            position: absolute;
+            width: 260px; /* Icing'den biraz küçük */
+            height: 30px;
+            top: -12px; /* Icing'in tam üstü */
+            left: 50%;
+            transform: translateX(-50%) rotateX(10deg);
+            z-index: 3; /* Icing'in üstünde */
+            background-image: 
+                radial-gradient(#ffffff 25%, transparent 25%), /* Beyaz */
+                radial-gradient(#fde047 25%, transparent 25%), /* Sarı */
+                radial-gradient(#60a5fa 25%, transparent 25%); /* Mavi */
+            background-size: 12px 12px; /* Süslerin boyutu */
+            background-position: 0 0, 6px 0, 0 6px;
+            opacity: 0.9;
+            pointer-events: none; /* Tıklamayı engellemesin */
+        }
+
         /* --- Pasta ve Mumlar için Özel CSS Kodları --- */
         .cake-container {
             position: relative;
@@ -100,9 +119,9 @@
             transform: translateX(-50%) rotateX(10deg);
             width: 270px; /* Pastadan biraz küçük */
             height: 40px;
-            background: #fdf6e3; /* Krema rengi */
+            background: #F472B6; /* Canlı Pembe Krema */
             border-radius: 50% / 25px; /* Daha belirgin damla efekti */
-            border: 3px solid #eee;
+            border: 3px solid #FBCFE8; /* Açık Pembe Kenar */
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             z-index: 2;
         }
@@ -114,7 +133,7 @@
             transform: translateX(-50%) rotateX(10deg);
             width: 290px;
             height: 20px;
-            background: repeating-linear-gradient(45deg, #f7d794, #f7d794 5px, #fec7d7 5px, #fec7d7 10px); /* Dekoratif desen */
+            background: repeating-linear-gradient(45deg, #FBCFE8, #FBCFE8 5px, #F472B6 5px, #F472B6 10px); /* Tamamen Pembe Dekoratif desen */
             border-radius: 10px 10px 0 0;
             z-index: 1;
         }
@@ -211,7 +230,7 @@
 </head>
 <body class="font-montserrat text-white">
 
-    <!-- Ana Başlık --><h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-8 animate-fade-in font-pacifico leading-tight">
+    <!-- Ana Başlık - "font-pacifico" kaldırıldı --><h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-8 animate-fade-in leading-tight">
         Doğum Günün Kutlu Olsun Fatihim!
     </h1>
 
@@ -229,6 +248,7 @@
         <div class="cake-base"></div>
         <div class="decoration-edge"></div>
         <div class="icing-top"></div>
+        <div class="sprinkles"></div> <!-- YENİ: Pasta Süsleri Eklendi -->
         
         <div class="candle-set">
             <!-- 5 adet küçük mum --><div class="small-candle" data-id="1">
@@ -259,7 +279,7 @@
         </div>
     </div>
 
-    <!-- İmza --><p class="text-3xl font-medium text-white italic mt-16 font-pacifico drop-shadow-lg">
+    <!-- İmza - "font-pacifico" ve "italic" kaldırıldı --><p class="text-3xl font-medium text-white mt-16 drop-shadow-lg">
         Fatihime özel ~ Kayra
     </p>
 
