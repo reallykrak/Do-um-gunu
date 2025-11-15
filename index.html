@@ -5,124 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doğum Günün Kutlu Olsun Fatih!</title>
     
-    <!-- Tailwind CSS'i yüklüyoruz -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS'i yüklüyoruz --><script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts'tan "Inter" ve "Pacifico" (el yazısı) fontunu yüklüyoruz -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts'tan "Pacifico" (el yazısı) ve "Montserrat" (modern) fontlarını yüklüyoruz --><link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
         /* Tailwind'e özel fontlarımızı ekleyelim */
         .font-pacifico {
             font-family: 'Pacifico', cursive;
         }
-        .font-inter {
-            font-family: 'Inter', sans-serif;
+        .font-montserrat {
+            font-family: 'Montserrat', sans-serif;
         }
 
-        /* --- Pasta ve Mum için Özel CSS Kodları --- */
+        /* --- Arka Plan Animasyonu --- */
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden; /* Taşmayı engelle */
+            position: relative;
+        }
 
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Konfeti Efekti için CSS */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--color);
+            border-radius: 50%;
+            animation: fall var(--duration) linear forwards;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* --- Pasta ve Mumlar için Özel CSS Kodları --- */
         .cake-container {
             position: relative;
-            width: 200px;
-            height: 120px;
-            margin-top: 60px; /* Mum için yer aç */
-            margin-bottom: 30px;
+            width: 280px; /* Daha büyük pasta */
+            height: 200px;
+            margin-top: 80px; /* Mumlar için yer aç */
+            margin-bottom: 40px;
+            perspective: 1000px; /* 3D efekti için */
         }
 
-        .cake {
+        .cake-base {
             position: absolute;
             bottom: 0;
-            width: 200px;
-            height: 100px;
-            background: #d2691e; /* çikolata */
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            border-bottom: 5px solid #8B4513; /* Koyu kahve taban */
-        }
-
-        .icing {
-            position: absolute;
-            top: -10px;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: #f8f8f8; /* beyaz krema */
-            border-radius: 50% / 20px; /* Damla efekti */
-            border: 2px solid #eee;
-        }
-
-        .candle {
-            position: absolute;
-            bottom: 90px; /* Pastanın üstünde */
             left: 50%;
-            transform: translateX(-50%);
-            width: 18px;
-            height: 55px;
-            background: linear-gradient(to right, #4facfe, #00f2fe); /* Mavi-beyaz mum */
-            border: 2px solid #fff;
-            border-radius: 6px 6px 0 0;
-            cursor: pointer;
+            transform: translateX(-50%) rotateX(10deg); /* Hafif 3D görünüm */
+            width: 280px;
+            height: 120px;
+            background: #FFC0CB; /* Açık pembe pasta katmanı */
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 -5px 10px rgba(0,0,0,0.2);
+            border-bottom: 8px solid #E0BBE4; /* Koyu pembe taban */
+        }
+
+        .icing-top {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotateX(10deg);
+            width: 270px; /* Pastadan biraz küçük */
+            height: 40px;
+            background: #fdf6e3; /* Krema rengi */
+            border-radius: 50% / 25px; /* Daha belirgin damla efekti */
+            border: 3px solid #eee;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .decoration-edge {
+            position: absolute;
+            bottom: 110px; /* Pastanın üst kenarı */
+            left: 50%;
+            transform: translateX(-50%) rotateX(10deg);
+            width: 290px;
+            height: 20px;
+            background: repeating-linear-gradient(45deg, #f7d794, #f7d794 5px, #fec7d7 5px, #fec7d7 10px); /* Dekoratif desen */
+            border-radius: 10px 10px 0 0;
+            z-index: 1;
+        }
+
+        .candle-set {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            bottom: 120px; /* Pastanın üzerinde */
+            left: 0;
+            display: flex;
+            justify-content: space-evenly; /* Mumları eşit dağıt */
+            align-items: flex-end;
             z-index: 10;
         }
 
-        .wick {
+        .small-candle {
+            position: relative;
+            width: 12px; /* Daha küçük mumlar */
+            height: 40px;
+            background: linear-gradient(to right, #FFD700, #FFA500); /* Altın rengi mumlar */
+            border: 1px solid #fff;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease-out; /* Tıklama için */
+        }
+
+        .small-candle:hover {
+            transform: scale(1.05);
+        }
+
+        .small-candle .wick {
             position: absolute;
-            top: -7px;
+            top: -5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 3px;
-            height: 8px;
+            width: 2px;
+            height: 6px;
             background: #333;
         }
 
-        .flame {
+        .small-candle .flame {
             position: absolute;
-            top: -26px; /* Fitilin üstünde */
+            top: -18px; /* Fitilin üstünde */
             left: 50%;
             transform: translateX(-50%);
-            width: 14px;
-            height: 22px;
-            background: #ffc800; /* Alev sarısı */
+            width: 10px;
+            height: 16px;
+            background: #ffecb3; /* Daha açık alev */
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 0 0 12px #ffc800, 0 0 20px #ffc800, 0 0 5px #f00;
-            animation: flicker 1s infinite alternate;
+            box-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500, 0 0 3px #f00;
+            animation: flicker 0.8s infinite alternate;
             transition: all 0.3s ease-out;
             opacity: 1;
-            /* Tıklamayı kolaylaştırmak için daha geniş bir alan */
-            pointer-events: none; 
+            pointer-events: none; /* Mumun tıklanmasını engellemesin */
         }
 
-        @keyframes flicker {
-            0% {
-                transform: translateX(-50%) scale(1);
-                box-shadow: 0 0 12px #ffc800, 0 0 20px #ffc800, 0 0 5px #f00;
-            }
-            50% {
-                transform: translateX(-48%) scale(1.1);
-                box-shadow: 0 0 14px #ffc800, 0 0 26px #ffc800, 0 0 7px #f00;
-            }
-            100% {
-                transform: translateX(-50%) scale(0.95);
-                box-shadow: 0 0 10px #ffc800, 0 0 18px #ffc800, 0 0 5px #f00;
-            }
-        }
-
-        /* Mum üflendiğindeki durum */
-        .flame.out {
+        /* Tek bir alev için değil, tüm alevler için flicker animasyonu */
+        .small-candle .flame.out {
             opacity: 0;
-            transform: translateX(-50%) translateY(10px) scale(0);
+            transform: translateX(-50%) translateY(5px) scale(0);
         }
 
-        .smoke {
+        .small-candle .smoke {
             position: absolute;
-            top: -26px;
+            top: -18px;
             left: 50%;
-            width: 10px;
-            height: 12px;
-            background: #777;
+            width: 8px;
+            height: 10px;
+            background: #999;
             border-radius: 50%;
             opacity: 0;
             transform: translateX(-50%);
@@ -130,69 +193,205 @@
             z-index: 5;
         }
 
-        /* Alev söndüğünde dumanın çıkması */
-        .flame.out + .smoke {
-            opacity: 0.6;
-            transform: translateX(-50%) translateY(-25px) scale(1.8);
+        .small-candle .flame.out + .smoke {
+            opacity: 0.7;
+            transform: translateX(-50%) translateY(-20px) scale(1.5);
+        }
+
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
 
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 min-h-screen flex flex-col items-center justify-center p-4 text-white text-center overflow-hidden font-inter">
+<body class="font-montserrat text-white">
 
-    <!-- Ana Başlık -->
-    <h1 class="text-4xl md:text-6xl font-extrabold text-yellow-300 drop-shadow-lg mb-6 animate-pulse font-pacifico">
-        Doğum günün kutlu olsun Fatihim
+    <!-- Ana Başlık --><h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-8 animate-fade-in font-pacifico leading-tight">
+        Doğum Günün Kutlu Olsun Fatihim!
     </h1>
 
-    <!-- Yönlendirme Metni -->
-    <p id="info-text" class="text-xl text-gray-200 mb-8 transition-opacity duration-500">
-        Mumu üflemek için tıkla!
-    </p>
-
-    <!-- Pasta ve Mum Alanı -->
-    <div class="cake-container">
-        <div class="cake">
-            <div class="icing"></div>
-        </div>
-        <!-- Tıklanabilir Mum -->
-        <div id="candle" class="candle" title="Mumu üfle!">
-            <div class="wick"></div>
-            <div id="flame" class="flame"></div>
-            <div id="smoke" class="smoke"></div> <!-- Duman efekti -->
+    <!-- Bilgilendirme ve Mesaj Kutusu --><div class="message-box text-center mb-10 mx-auto max-w-xl">
+        <p id="info-text" class="text-xl md:text-2xl mb-4 transition-opacity duration-700 font-semibold">
+            Mumlara üflemek için mikrofona konuş!
+        </p>
+        <p id="status-text" class="text-lg text-gray-200"></p>
+        <button id="startButton" class="mt-4 px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full shadow-lg transition transform hover:scale-105 duration-300">
+            Mikrofonu Başlat
+        </button>
+    </div>
+    
+    <!-- Pasta ve Mumlar Alanı --><div class="cake-container">
+        <div class="cake-base"></div>
+        <div class="decoration-edge"></div>
+        <div class="icing-top"></div>
+        
+        <div class="candle-set">
+            <!-- 5 adet küçük mum --><div class="small-candle" data-id="1">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="small-candle" data-id="2">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="small-candle" data-id="3">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="small-candle" data-id="4">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
+            <div class="small-candle" data-id="5">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke"></div>
+            </div>
         </div>
     </div>
 
-    <!-- İmza -->
-    <p class="text-2xl font-medium text-gray-300 italic mt-12 font-pacifico">
+    <!-- İmza --><p class="text-3xl font-medium text-white italic mt-16 font-pacifico drop-shadow-lg">
         Fatihime özel ~ Kayra
     </p>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const candle = document.getElementById('candle');
-            const flame = document.getElementById('flame');
+            const flames = document.querySelectorAll('.small-candle .flame');
             const infoText = document.getElementById('info-text');
-            let isBlownOut = false;
+            const statusText = document.getElementById('status-text');
+            const startButton = document.getElementById('startButton');
+            let blownOutCount = 0;
+            const totalCandles = flames.length;
+            let audioContext;
+            let analyser;
+            let microphone;
+            let isListening = false;
+            let confettiInterval;
 
-            if (candle && flame && infoText) {
-                candle.addEventListener('click', () => {
-                    // Sadece bir kez üflenebilsin
-                    if (!isBlownOut) {
-                        isBlownOut = true;
-                        flame.classList.add('out');
-                        infoText.style.opacity = '0'; // "Mumu üfle" yazısını gizle
-                        
-                        // Söndükten sonra "İyi ki doğdun!" diyelim
-                        setTimeout(() => {
-                            infoText.textContent = "İyi ki doğdun! 🎉";
-                            infoText.style.opacity = '1';
-                        }, 800); // Duman efektinden sonra
-                    }
+            // Konfeti oluşturma fonksiyonu
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                document.body.appendChild(confetti);
+
+                const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722', '#795548', '#9e9e9e', '#607d8b'];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 saniye
+
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
                 });
             }
+
+            // Tüm alevleri söndür
+            function blowOutAllFlames() {
+                flames.forEach(flame => {
+                    if (!flame.classList.contains('out')) {
+                        flame.classList.add('out');
+                        blownOutCount++;
+                    }
+                });
+                
+                if (blownOutCount === totalCandles && isListening) {
+                    stopListening();
+                    infoText.textContent = "İyi ki doğdun Fatihim! 🎉";
+                    statusText.textContent = "Dileklerin gerçek olsun! 💖";
+                    startButton.style.display = 'none'; // Butonu gizle
+                    
+                    // Konfeti yağmurunu başlat
+                    confettiInterval = setInterval(createConfetti, 100); // Her 100ms'de bir konfeti
+                    setTimeout(() => {
+                        clearInterval(confettiInterval); // 5 saniye sonra durdur
+                    }, 5000);
+                }
+            }
+
+            // Mikrofon izinlerini al ve dinlemeye başla
+            async function startListening() {
+                if (isListening) return;
+
+                startButton.textContent = "Dinleniyor...";
+                startButton.disabled = true;
+
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    
+                    microphone.connect(analyser);
+                    analyser.fftSize = 256; // Daha hızlı analiz için küçük boyut
+                    const bufferLength = analyser.frequencyBinCount;
+                    const dataArray = new Uint8Array(bufferLength);
+
+                    isListening = true;
+                    statusText.textContent = "Mikrofon aktif. Üfle!";
+
+                    const checkVolume = () => {
+                        if (!isListening) return;
+
+                        analyser.getByteFrequencyData(dataArray);
+                        let sum = 0;
+                        for (let i = 0; i < bufferLength; i++) {
+                            sum += dataArray[i];
+                        }
+                        let average = sum / bufferLength;
+
+                        // Üfleme algılama eşiği (denemelerle ayarlanabilir)
+                        const blowThreshold = 80; 
+
+                        if (average > blowThreshold) {
+                            console.log("Üfleme algılandı! Ses düzeyi:", average);
+                            blowOutAllFlames();
+                        }
+
+                        if (blownOutCount < totalCandles) {
+                            requestAnimationFrame(checkVolume);
+                        } else {
+                            // Tüm mumlar söndüğünde durdur
+                            stopListening();
+                        }
+                    };
+
+                    checkVolume();
+
+                } catch (err) {
+                    console.error("Mikrofon erişimi reddedildi veya hata oluştu: ", err);
+                    statusText.textContent = "Mikrofon erişimi gerekli! Lütfen izin verin.";
+                    startButton.textContent = "Mikrofonu Başlat";
+                    startButton.disabled = false;
+                }
+            }
+
+            function stopListening() {
+                if (!isListening) return;
+                isListening = false;
+                if (microphone) {
+                    microphone.disconnect();
+                    microphone.mediaStream.getTracks().forEach(track => track.stop());
+                }
+                if (audioContext) {
+                    audioContext.close();
+                }
+                statusText.textContent = "";
+            }
+
+            startButton.addEventListener('click', startListening);
+
+            // Sayfa kapatıldığında mikrofonu kapat
+            window.addEventListener('beforeunload', stopListening);
         });
     </script>
 
 </body>
-  </html>
+</html>
